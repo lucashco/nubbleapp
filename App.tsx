@@ -5,9 +5,8 @@ import {Text} from './src/components/Text';
 function App(): JSX.Element {
   return (
     <SafeAreaView>
-      <Text preset="headingLarge" style={{color: '#fccad1'}}>
-        Miau
-      </Text>
+      <Text preset="headingLarge">Teste de fonte</Text>
+      <Text preset="headingMedium">Teste de fonte</Text>
     </SafeAreaView>
   );
 }

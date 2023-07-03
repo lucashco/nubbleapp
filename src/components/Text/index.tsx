@@ -24,8 +24,8 @@ type TextVariants =
   | 'paragraphCaptionSmall';
 
 const $fontSizes: Record<TextVariants, TextStyle> = {
-  headingLarge: {fontSize: 32, lineHeight: 38.4},
-  headingMedium: {fontSize: 22, lineHeight: 26.4},
+  headingLarge: {fontSize: 32, lineHeight: 38.4, fontFamily: 'Satoshi-Bold'},
+  headingMedium: {fontSize: 22, lineHeight: 26.4, fontFamily: 'Satoshi-Italic'},
   headingSmall: {fontSize: 18, lineHeight: 23.4},
 
   paragraphLarge: {fontSize: 18, lineHeight: 25.2},
