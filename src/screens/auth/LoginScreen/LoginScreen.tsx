@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {Icon} from '../../../components/Icon';
 import {Text} from '../../../components/Text';
 import {Button} from '../../../components/Button';
 import {TextInput} from '../../../components/TextInput';
 import {Screen} from '../../../components/Screen/Screen';
+import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 
 export function LoginScreen() {
   return (
-    <Screen>
+    <Screen isScrollable>
       <Text preset="headingLarge" mb="s8" bold>
         Olá
       </Text>
@@ -19,14 +19,10 @@ export function LoginScreen() {
       <TextInput
         label="E-mail"
         placeholder="Digite seu e-mail"
-        errorMessage="E-mail inválido"
         boxProps={{mb: 's20'}}
       />
-      <TextInput
-        label="Senha"
-        placeholder="Digite sua senha"
-        RightComponent={<Icon name="eyeOff" color="gray4" />}
-      />
+
+      <PasswordInput label="Senha" placeholder="Digite sua senha" />
       <Text color="primary" mt="s10" preset="paragraphSmall" bold>
         Esqueci minha senha
       </Text>

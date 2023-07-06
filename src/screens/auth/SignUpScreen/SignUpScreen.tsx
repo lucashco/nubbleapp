@@ -3,6 +3,7 @@ import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text';
 import {TextInput} from '../../../components/TextInput';
 import {Button} from '../../../components/Button';
+import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 
 export function SignUpScreen() {
   function submitForm() {
@@ -26,10 +27,10 @@ export function SignUpScreen() {
         keyboardType="email-address"
         boxProps={{mb: 's20'}}
       />
-      <TextInput
+
+      <PasswordInput
         label="Senha"
         placeholder="Digite sua senha"
-        secureTextEntry
         boxProps={{mb: 's48'}}
       />
 
