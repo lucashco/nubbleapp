@@ -10,7 +10,13 @@ export function ScrollViewContainer({
   backgroundColor,
   children,
 }: ContainerProps) {
-  return <ScrollView style={{backgroundColor, flex: 1}}>{children}</ScrollView>;
+  return (
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      style={{backgroundColor, flex: 1}}>
+      {children}
+    </ScrollView>
+  );
 }
 export function ViewContainer({backgroundColor, children}: ContainerProps) {
   return <View style={{backgroundColor, flex: 1}}>{children}</View>;
