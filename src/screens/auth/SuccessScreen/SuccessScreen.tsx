@@ -24,7 +24,7 @@ export function SuccessScreen({route}: ScreenProps) {
       <Text preset="paragraphLarge" mt="s16">
         {route.params.description}
       </Text>
-      <Button onPress={backToBeginning} title="Voltar ao início" />
+      <Button onPress={backToBeginning} title="Voltar ao início" mt="s40" />
     </Screen>
   );
 }
