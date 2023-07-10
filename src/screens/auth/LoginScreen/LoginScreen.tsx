@@ -36,11 +36,14 @@ export function LoginScreen({navigation}: ScreenProps) {
       />
 
       <PasswordInput label="Senha" placeholder="Digite sua senha" />
-      <Pressable onPress={navigateToForgotPasswordScreen}>
-        <Text color="primary" mt="s10" preset="paragraphSmall" bold>
-          Esqueci minha senha
-        </Text>
-      </Pressable>
+      <Text
+        onPress={navigateToForgotPasswordScreen}
+        color="primary"
+        mt="s10"
+        preset="paragraphSmall"
+        bold>
+        Esqueci minha senha
+      </Text>
 
       <Button preset="primary" title="Entrar" mt="s48" />
       <Button
