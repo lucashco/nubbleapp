@@ -1,4 +1,5 @@
 import React from 'react';
+import {Pressable} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {Text} from '../../../components/Text';
@@ -13,6 +14,10 @@ type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 export function LoginScreen({navigation}: ScreenProps) {
   function navigateToSignUpScreen() {
     navigation.navigate('SignUpScreen');
+  }
+
+  function navigateToForgotPasswordScreen() {
+    navigation.navigate('ForgotPasswordScreen');
   }
 
   return (
@@ -31,9 +36,11 @@ export function LoginScreen({navigation}: ScreenProps) {
       />
 
       <PasswordInput label="Senha" placeholder="Digite sua senha" />
-      <Text color="primary" mt="s10" preset="paragraphSmall" bold>
-        Esqueci minha senha
-      </Text>
+      <Pressable onPress={navigateToForgotPasswordScreen}>
+        <Text color="primary" mt="s10" preset="paragraphSmall" bold>
+          Esqueci minha senha
+        </Text>
+      </Pressable>
 
       <Button preset="primary" title="Entrar" mt="s48" />
       <Button
