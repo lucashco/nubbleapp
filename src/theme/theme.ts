@@ -1,6 +1,6 @@
 import {createTheme} from '@shopify/restyle';
 
-const palette = {
+export const palette = {
   greenPrimary: '#074c4e',
   greenPrimaryLight: '#eaf6f6',
   carrotSecondary: '#F86F2D',
