@@ -5,7 +5,7 @@ import {useAppSafeArea} from '../../hooks/useAppSafeArea';
 import {useAppTheme} from '../../hooks/useAppTheme';
 
 import {Box} from '../Box';
-import {Icon} from '../Icon';
+import {Icon} from '../Icon/icon';
 import {Text} from '../Text';
 import {ScrollViewContainer, ViewContainer} from './components/ScreenContainer';
 
