@@ -1,13 +1,27 @@
 import React from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
 import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text';
 import {TextInput} from '../../../components/TextInput';
 import {Button} from '../../../components/Button';
 import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
+import {RootStackParamList} from '../../../routes/routes';
 
-export function SignUpScreen() {
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
+
+export function SignUpScreen({navigation}: ScreenProps) {
   function submitForm() {
     //TODO - implement
+
+    navigation.navigate('SuccessScreen', {
+      title: 'Sua conta foi criada com sucesso!',
+      description: 'Agora é só fazer logion na nossa plataforma',
+      icon: {
+        name: 'checkRound',
+        color: 'success',
+      },
+    });
   }
   return (
     <Screen canGoBack isScrollable>
