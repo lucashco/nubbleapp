@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {Text} from '../../../components/Text';
@@ -9,9 +9,26 @@ import {Screen} from '../../../components/Screen/Screen';
 import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 import {RootStackParamList} from '../../../routes/routes';
 
+type LoginFormType = {
+  email: string;
+  password: string;
+};
+
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 export function LoginScreen({navigation}: ScreenProps) {
+  const {control, formState, handleSubmit} = useForm<LoginFormType>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onChange',
+  });
+
+  function submitForm(data: LoginFormType) {
+    console.log(data);
+  }
+
   function navigateToSignUpScreen() {
     navigation.navigate('SignUpScreen');
   }
@@ -29,13 +46,41 @@ export function LoginScreen({navigation}: ScreenProps) {
         Digite seu e-mail e senha para entrar
       </Text>
 
-      <TextInput
-        label="E-mail"
-        placeholder="Digite seu e-mail"
-        boxProps={{mb: 's20'}}
+      <Controller
+        control={control}
+        name="email"
+        rules={{
+          required: 'Senha obrigatória',
+        }}
+        render={({field, fieldState}) => (
+          <TextInput
+            label="E-mail"
+            placeholder="Digite seu e-mail"
+            value={field.value}
+            onChangeText={field.onChange}
+            errorMessage={fieldState.error?.message}
+            boxProps={{mb: 's20'}}
+          />
+        )}
       />
 
-      <PasswordInput label="Senha" placeholder="Digite sua senha" />
+      <Controller
+        control={control}
+        name="email"
+        rules={{
+          required: 'E-mail obrigatório',
+        }}
+        render={({field, fieldState}) => (
+          <PasswordInput
+            label="Senha"
+            placeholder="Digite sua senha"
+            onChangeText={field.onChange}
+            value={field.value}
+            errorMessage={fieldState.error?.message}
+          />
+        )}
+      />
+
       <Text
         onPress={navigateToForgotPasswordScreen}
         color="primary"
@@ -45,7 +90,13 @@ export function LoginScreen({navigation}: ScreenProps) {
         Esqueci minha senha
       </Text>
 
-      <Button preset="primary" title="Entrar" mt="s48" />
+      <Button
+        onPress={handleSubmit(submitForm)}
+        disabled={!formState.isValid}
+        preset="primary"
+        title="Entrar"
+        mt="s48"
+      />
       <Button
         onPress={navigateToSignUpScreen}
         preset="outline"
