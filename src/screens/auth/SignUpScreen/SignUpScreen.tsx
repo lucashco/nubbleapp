@@ -1,5 +1,6 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {Screen} from '../../../components/Screen/Screen';
@@ -10,20 +11,15 @@ import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
 
 import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
 
+import {SignUpSchema, signUpSchema} from './signUpSchema';
 import {RootStackParamList} from '../../../routes/routes';
-
-type SignUpFormType = {
-  username: string;
-  fullName: string;
-  email: string;
-  password: string;
-};
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
 
-export function SignUpScreen({navigation}: ScreenProps) {
+export function SignUpScreen({}: ScreenProps) {
   const {reset} = useResetNavigationSuccess();
-  const {control, formState, handleSubmit} = useForm<SignUpFormType>({
+  const {control, formState, handleSubmit} = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: '',
       fullName: '',
@@ -33,32 +29,23 @@ export function SignUpScreen({navigation}: ScreenProps) {
     mode: 'onChange',
   });
 
-  function submitForm(data: SignUpFormType) {
+  function submitForm(data: SignUpSchema) {
     console.log(data);
 
-    // reset({
-    //   title: 'Sua conta foi criada com sucesso!',
-    //   description: 'Agora é só fazer logion na nossa plataforma',
-    //   icon: {
-    //     name: 'checkRound',
-    //     color: 'success',
-    //   },
-    // });
+    reset({
+      title: 'Sua conta foi criada com sucesso!',
+      description: 'Agora é só fazer logion na nossa plataforma',
+      icon: {
+        name: 'checkRound',
+        color: 'success',
+      },
+    });
   }
   return (
     <Screen canGoBack isScrollable>
       <Text preset="headingLarge" mb="s32" bold>
         Criar uma conta
       </Text>
-
-      <FormTextInput
-        control={control}
-        name="username"
-        rules={{required: 'Username obrigatório'}}
-        label="Seu username"
-        placeholder="@"
-        boxProps={{mb: 's20'}}
-      />
 
       <FormTextInput
         control={control}
