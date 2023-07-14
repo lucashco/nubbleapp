@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {TouchableOpacityBox, TouchableOpacityBoxProps} from '../Box';
-import {Text} from '../Text';
+import {TouchableOpacityBox, TouchableOpacityBoxProps} from '../Box/Box';
+import {Text} from '../Text/Text';
 import {ButtonPreset, buttonPresets} from './presets';
-import {ActivityIndicator} from '../ActivityIndicator';
+import {ActivityIndicator} from '../ActivityIndicator/ActivityIndicator';
 
 interface ButtonProps extends TouchableOpacityBoxProps {
   title: string;

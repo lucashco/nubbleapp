@@ -4,9 +4,9 @@ import {KeyboardAvoidingView, Platform} from 'react-native';
 import {useAppSafeArea} from '../../hooks/useAppSafeArea';
 import {useAppTheme} from '../../hooks/useAppTheme';
 
-import {Box} from '../Box';
-import {Icon} from '../Icon/icon';
-import {Text} from '../Text';
+import {Box} from '../Box/Box';
+import {Icon} from '../Icon/Icon';
+import {Text} from '../Text/Text';
 import {ScrollViewContainer, ViewContainer} from './components/ScreenContainer';
 
 interface ScreenProps {
