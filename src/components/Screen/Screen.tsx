@@ -1,45 +1,51 @@
 import React from 'react';
 import {KeyboardAvoidingView, Platform} from 'react-native';
 
-import {Text, Box, Icon} from '@components';
-import {useAppTheme, useAppSafeArea} from '@hooks';
+import {useNavigation} from '@react-navigation/native';
+
+import {Box, BoxProps, TouchableOpacityBox, Icon, Text} from '@components';
+import {useAppSafeArea, useAppTheme} from '@hooks';
 
 import {ScrollViewContainer, ViewContainer} from './components/ScreenContainer';
 
-interface ScreenProps {
+interface ScreenProps extends BoxProps {
   children: React.ReactNode;
   canGoBack?: boolean;
-  isScrollable?: boolean;
+  scrollable?: boolean;
 }
 
 export function Screen({
-  canGoBack = false,
-  isScrollable = false,
   children,
+  canGoBack = false,
+  scrollable = false,
+  style,
+  ...boxProps
 }: ScreenProps) {
-  const {top, bottom} = useAppSafeArea();
+  const {bottom, top} = useAppSafeArea();
   const {colors} = useAppTheme();
 
-  const Container = isScrollable ? ScrollViewContainer : ViewContainer;
+  const navigation = useNavigation();
 
+  const Container = scrollable ? ScrollViewContainer : ViewContainer;
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={{flex: 1}}>
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <Container backgroundColor={colors.background}>
         <Box
           paddingHorizontal="s24"
-          style={{
-            paddingTop: top,
-            paddingBottom: bottom,
-          }}>
+          style={[{paddingTop: top, paddingBottom: bottom}, style]}
+          {...boxProps}>
           {canGoBack && (
-            <Box mb="s24" flexDirection="row" alignItems="center">
+            <TouchableOpacityBox
+              onPress={navigation.goBack}
+              mb="s24"
+              flexDirection="row">
               <Icon name="arrowLeft" color="primary" />
-              <Text preset="paragraphMedium" bold ml="s8">
+              <Text preset="paragraphMedium" semiBold ml="s8">
                 Voltar
               </Text>
-            </Box>
+            </TouchableOpacityBox>
           )}
           {children}
         </Box>
