@@ -37,7 +37,7 @@ export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
   }
 
   return (
-    <Screen isScrollable>
+    <Screen scrollable>
       <Text preset="headingLarge" mb="s8" bold>
         Olá
       </Text>
