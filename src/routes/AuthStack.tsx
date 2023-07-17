@@ -10,7 +10,7 @@ import {
   SuccessScreen,
 } from '@screens';
 
-export type RootStackParamList = {
+export type AuthStackParamList = {
   LoginScreen: undefined;
   SignUpScreen: undefined;
   SuccessScreen: {
@@ -21,7 +21,7 @@ export type RootStackParamList = {
   ForgotPasswordScreen: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<AuthStackParamList>();
 
 export function AuthStack() {
   return (
