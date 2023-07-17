@@ -33,7 +33,7 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
 
     reset({
       title: 'Sua conta foi criada com sucesso!',
-      description: 'Agora é só fazer logion na nossa plataforma',
+      description: 'Agora é só fazer login na nossa plataforma',
       icon: {
         name: 'checkRound',
         color: 'success',
