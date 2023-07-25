@@ -12,6 +12,7 @@ export function PostImage({imageURL}: PostImageProps) {
       resizeMode="cover"
       width={Dimensions.get('screen').width}
       height={300}
+      style={{marginHorizontal: -24}}
     />
   );
 }
