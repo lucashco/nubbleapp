@@ -35,7 +35,7 @@ export function HomeEmpty({loading, error, refetch}: Props) {
   );
 
   return (
-    <Box flex={1} justifyContent="center" alignContent="center">
+    <Box flex={1} justifyContent="center" alignItems="center">
       {component}
     </Box>
   );
