@@ -42,7 +42,6 @@ export function usePostList() {
       } else {
         setHasNextPage(false);
       }
-      setPage(currentPage => currentPage + 1);
     } catch (err) {
       setError(true);
     } finally {
