@@ -1,19 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {FlatList, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 
-import {Post, postService} from '@domain';
+import {Post, usePostList} from '@domain';
 
 import {PostItem, Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
 
+import {HomeEmpty} from './components/HomeEmpty';
 import {HomeHeader} from './components/HomeHeader';
 
 export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
-  const [postList, setPostList] = useState<Post[]>([]);
-  useEffect(() => {
-    postService.getList().then(list => setPostList(list));
-  }, []);
-
+  const {loading, error, refetch, postList} = usePostList();
   function renderItem({item}: ListRenderItemInfo<Post>) {
     return <PostItem post={item} />;
   }
@@ -25,7 +22,11 @@ export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
         keyExtractor={post => post.id}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={postList.length === 0 ? $listContainer : {}}
         ListHeaderComponent={<HomeHeader />}
+        ListEmptyComponent={
+          <HomeEmpty loading={loading} error={error} refetch={refetch} />
+        }
       />
     </Screen>
   );
@@ -35,4 +36,9 @@ const $screen: StyleProp<ViewStyle> = {
   paddingTop: 0,
   paddingBottom: 0,
   paddingHorizontal: 0,
+  flex: 1,
+};
+
+const $listContainer: StyleProp<ViewStyle> = {
+  flex: 1,
 };
