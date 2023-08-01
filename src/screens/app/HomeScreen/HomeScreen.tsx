@@ -22,7 +22,7 @@ export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
     error,
     refresh,
     fetchNextPage,
-    data: postList,
+    list: postList,
   } = usePostList();
 
   const flatListRef = useRef<FlatList<Post>>(null);
