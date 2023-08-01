@@ -4,26 +4,34 @@ import {postService} from '../postService';
 import {Post} from '../postTypes';
 
 export function usePostList() {
+  const [postList, setPostList] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [postList, setPostList] = useState<Post[]>([]);
+  const [page, setPage] = useState(1);
 
   async function fetchData() {
     try {
       setError(false);
       setLoading(true);
-      const list = await postService.getList();
-      setPostList(list);
+      const list = await postService.getList(page);
+      setPostList(currentList => [...currentList, ...list]);
+      setPage(currentPage => currentPage + 1);
     } catch (err) {
-      console.log('LOG', err);
       setError(true);
     } finally {
       setLoading(false);
     }
   }
 
+  function fetchNextPage() {
+    if (!loading) {
+      fetchData();
+    }
+  }
+
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
@@ -31,5 +39,6 @@ export function usePostList() {
     error,
     loading,
     refetch: fetchData,
+    fetchNextPage,
   };
 }
