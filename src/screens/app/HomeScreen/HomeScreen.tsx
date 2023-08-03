@@ -40,7 +40,7 @@ export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
         contentContainerStyle={postList.length === 0 ? $listContainer : {}}
         showsVerticalScrollIndicator={false}
         data={postList}
-        keyExtractor={post => post.id}
+        keyExtractor={post => post.id.toString()}
         renderItem={renderItem}
         onEndReached={fetchNextPage}
         onEndReachedThreshold={0.1}

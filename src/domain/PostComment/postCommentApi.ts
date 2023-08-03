@@ -1,6 +1,5 @@
 import {PageAPI, PageParams, api} from '@api';
 
-// import {postListMock} from './postListMock';
 import {PostCommentApi} from './postCommentTypes';
 
 async function getList(

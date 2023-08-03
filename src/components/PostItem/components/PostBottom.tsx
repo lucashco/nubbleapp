@@ -1,44 +1,24 @@
 import React from 'react';
 
 import {Post} from '@domain';
-import {useNavigation} from '@react-navigation/native';
 
-import {Box, BoxProps, Text} from '@components';
+import {Box, Text} from '@components';
 
-type PostBottomProps = Pick<Post, 'id' | 'text' | 'author' | 'commentCount'> &
-  BoxProps;
+type Props = Pick<Post, 'author' | 'text' | 'commentCount'>;
 
-export function PostBottom({
-  author,
-  text,
-  commentCount,
-  id,
-  ...rest
-}: PostBottomProps) {
-  const navigation = useNavigation();
+export function PostBottom({author, text, commentCount}: Props) {
   const commentText = getCommentText(commentCount);
 
-  function navigateToPostCommentScreen() {
-    navigation.navigate('PostCommentScreen', {
-      postId: id,
-    });
-  }
-
   return (
-    <Box {...rest}>
-      <Text bold preset="paragraphMedium">
+    <Box mt="s16">
+      <Text preset="paragraphMedium" bold>
         {author.userName}
       </Text>
       <Text preset="paragraphMedium" color="gray1">
         {text}
       </Text>
       {commentText && (
-        <Text
-          onPress={navigateToPostCommentScreen}
-          bold
-          color="primary"
-          preset="paragraphSmall"
-          mt="s8">
+        <Text mt="s8" preset="paragraphSmall" bold color="primary">
           {commentText}
         </Text>
       )}
@@ -48,7 +28,7 @@ export function PostBottom({
 
 function getCommentText(commentCount: number): string | null {
   if (commentCount === 0) {
-    return '';
+    return null;
   } else if (commentCount === 1) {
     return 'ver comentário';
   } else {
