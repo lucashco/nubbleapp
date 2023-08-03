@@ -12,7 +12,7 @@ import {Box} from '../Box/Box';
 import {$fontFamily, $fontSizes, Text} from '../Text/Text';
 
 interface TextMessageProps extends RNTextInputProps {
-  onPressSend: () => void;
+  onPressSend: (message: string) => void;
 }
 
 export function TextMessage({
@@ -48,7 +48,9 @@ export function TextMessage({
         />
       </Box>
 
-      <Pressable onPress={onPressSend} disabled={sendIsDisabled}>
+      <Pressable
+        onPress={() => onPressSend(value || '')}
+        disabled={sendIsDisabled}>
         <Text
           preset="paragraphMedium"
           color={sendIsDisabled ? 'gray2' : 'primary'}>

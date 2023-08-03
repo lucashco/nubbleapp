@@ -16,12 +16,12 @@ export function PostCommentItem({postComment}: Props) {
         size={64}
         borderRadius={24}
       />
-      <Box ml="s12">
+      <Box ml="s12" flex={1}>
         <Text preset="paragraphSmall" bold>
           {postComment.author.userName}
         </Text>
         <Text preset="paragraphSmall" color="gray1">
-          {postComment.message}
+          {postComment.message} - {postComment.createdAtRelative}
         </Text>
       </Box>
     </Box>
