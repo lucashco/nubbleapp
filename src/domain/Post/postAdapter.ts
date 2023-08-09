@@ -11,6 +11,7 @@ function toPost(postAPI: PostAPI): Post {
       name: postAPI.user.full_name,
       userName: postAPI.user.username,
       profileURL: postAPI.user.profile_url,
+      id: postAPI.user.id,
     },
     imageURL: postAPI.image_url,
     commentCount: parseInt(postAPI.meta.comments_count, 10),
