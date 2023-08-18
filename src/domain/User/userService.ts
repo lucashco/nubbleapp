@@ -1,19 +1,13 @@
-import {apiAdapter} from '@api';
-import {Page} from '@types';
-
 import {userAdapter} from './userAdapter';
 import {userApi} from './userApi';
 import {User} from './userTypes';
 
-async function getList(page: number): Promise<Page<User>> {
-  const response = await userApi.getList({page, per_page: 10});
+async function getById(id: number): Promise<User> {
+  const response = await userApi.getById(id.toString());
 
-  return {
-    meta: apiAdapter.toMetaDataPage(response.meta),
-    data: response.data.map(userAdapter.toUser),
-  };
+  return userAdapter.toUser(response);
 }
 
 export const userService = {
-  getList,
+  getById,
 };

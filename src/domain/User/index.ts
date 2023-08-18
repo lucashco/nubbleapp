@@ -1,4 +1,4 @@
 export * from './userTypes';
 export * from './userService';
 
-export * from './useCases/useUserList';
+export * from './useCases/useUserGetById';
