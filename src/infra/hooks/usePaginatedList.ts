@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 
+import {useInfiniteQuery} from '@tanstack/react-query';
 import {Page} from '@types';
 
 export interface UsePaginatedListResult<TData> {
@@ -12,64 +13,34 @@ export interface UsePaginatedListResult<TData> {
 }
 
 export function usePaginatedList<Data>(
+  queryKey: readonly unknown[],
   getList: (page: number) => Promise<Page<Data>>,
 ): UsePaginatedListResult<Data> {
   const [list, setList] = useState<Data[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [page, setPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(true);
 
-  async function fetchInitialData() {
-    try {
-      setError(false);
-      setLoading(true);
-      const {data, meta} = await getList(1);
-      setList(data);
-      if (meta.hasNextPage) {
-        setPage(currentPage => currentPage + 1);
-      } else {
-        setHasNextPage(false);
-      }
-    } catch (err) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function fetchNextPage() {
-    if (loading || !hasNextPage) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const {data, meta} = await getList(page);
-      setList(currentList => currentList.concat(data));
-      if (meta.hasNextPage) {
-        setPage(currentPage => currentPage + 1);
-      } else {
-        setHasNextPage(false);
-      }
-    } catch (err) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }
+  const query = useInfiniteQuery({
+    queryKey,
+    queryFn: ({pageParam = 1}) => getList(pageParam),
+    getNextPageParam: ({meta}) =>
+      meta.hasNextPage ? meta.currentPage + 1 : null,
+  });
 
   useEffect(() => {
-    fetchInitialData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (query.data) {
+      const newList = query.data.pages.reduce<Data[]>((prev, page) => {
+        return [...prev, ...page.data];
+      }, []);
+
+      setList(newList);
+    }
+  }, [query.data]);
 
   return {
     list,
-    isError: error,
-    isLoading: loading,
-    refresh: fetchInitialData,
-    fetchNextPage,
-    hasNextPage,
+    isError: query.isError,
+    isLoading: query.isLoading,
+    refresh: query.refetch,
+    fetchNextPage: query.fetchNextPage,
+    hasNextPage: !!query.hasNextPage,
   };
 }
