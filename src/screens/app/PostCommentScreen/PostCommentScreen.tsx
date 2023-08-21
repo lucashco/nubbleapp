@@ -22,8 +22,7 @@ export function PostCommentScreen({
 
   const {bottom} = useAppSafeArea();
 
-  const {list, fetchNextPage, hasNextPage, refresh} =
-    usePostCommentList(postId);
+  const {list, fetchNextPage, hasNextPage} = usePostCommentList(postId);
 
   function renderItem({item}: ListRenderItemInfo<PostComment>) {
     return (
@@ -31,7 +30,7 @@ export function PostCommentScreen({
         postComment={item}
         userId={userId}
         postAuthorId={postAuthorId}
-        onRemoveComment={refresh}
+        postId={postId}
       />
     );
   }

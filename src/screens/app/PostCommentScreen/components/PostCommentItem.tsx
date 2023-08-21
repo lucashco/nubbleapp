@@ -10,19 +10,18 @@ interface Props {
   postComment: PostComment;
   userId: number;
   postAuthorId: number;
-  onRemoveComment: () => void;
+  postId: number;
 }
 
 export function PostCommentItem({
   postComment,
   userId,
   postAuthorId,
-  onRemoveComment,
+  postId,
 }: Props) {
   const {showToast} = useToastService();
-  const {mutate} = usePostCommentRemove({
+  const {mutate} = usePostCommentRemove(postId, {
     onSuccess: () => {
-      onRemoveComment();
       showToast({
         message: 'Comentário deletado',
       });
