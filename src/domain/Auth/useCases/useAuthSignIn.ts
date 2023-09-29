@@ -22,6 +22,6 @@ export function useAuthSignIn(options?: MutationOptions<AuthCredentials>) {
 
   return {
     isLoading: mutation.isLoading,
-    singIn: (variables: Variables) => mutation.mutate(variables),
+    signIn: (variables: Variables) => mutation.mutate(variables),
   };
 }
