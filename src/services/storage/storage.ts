@@ -5,3 +5,7 @@ export interface StorageService {
 }
 
 export let storage: StorageService;
+
+export function initializeStorage(storageImpl: StorageService) {
+  storage = storageImpl;
+}
