@@ -21,7 +21,8 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: '',
-      fullName: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
     },
@@ -56,9 +57,18 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
 
       <FormTextInput
         control={control}
-        name="fullName"
-        label="Nome completo"
+        name="firstName"
+        label="Nome"
         placeholder="Digite seu nome"
+        autoCapitalize="words"
+        boxProps={{mb: 's20'}}
+      />
+
+      <FormTextInput
+        control={control}
+        name="lastName"
+        label="Sobrenome"
+        placeholder="Digite seu sobrenome"
         autoCapitalize="words"
         boxProps={{mb: 's20'}}
       />
