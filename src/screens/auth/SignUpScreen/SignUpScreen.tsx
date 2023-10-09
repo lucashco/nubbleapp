@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useAuthSignUp} from '@domain';
+import {useAuthIsUsernameIsAvailable, useAuthSignUp} from '@domain';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 
@@ -10,6 +10,7 @@ import {
   Button,
   FormTextInput,
   FormPasswordInput,
+  ActivityIndicator,
 } from '@components';
 import {useResetNavigationSuccess} from '@hooks';
 import {AuthScreenProps, AuthStackParamList} from '@routes';
@@ -35,11 +36,12 @@ const defaultValues: SignUpSchema = {
 
 export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
   const {reset} = useResetNavigationSuccess();
-  const {control, formState, handleSubmit} = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues,
-    mode: 'onChange',
-  });
+  const {control, formState, handleSubmit, watch, getFieldState} =
+    useForm<SignUpSchema>({
+      resolver: zodResolver(signUpSchema),
+      defaultValues,
+      mode: 'onChange',
+    });
 
   const {signUp, isLoading} = useAuthSignUp({
     onSuccess: () => {
@@ -50,6 +52,14 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
   function submitForm(formValues: SignUpSchema) {
     signUp(formValues);
   }
+
+  const username = watch('username');
+  const usernameState = getFieldState('username');
+  const usernameIsValid = !usernameState.invalid && usernameState.isDirty;
+  const usernameQuery = useAuthIsUsernameIsAvailable({
+    username,
+    enabled: usernameIsValid,
+  });
 
   return (
     <Screen canGoBack scrollable>
@@ -63,6 +73,14 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
         label="Seu username"
         placeholder="@"
         boxProps={{mb: 's20'}}
+        errorMessage={
+          usernameQuery.isUnavailable ? 'username indisponível' : undefined
+        }
+        RightComponent={
+          usernameQuery.isFetching ? (
+            <ActivityIndicator size="small" color="primary" />
+          ) : undefined
+        }
       />
 
       <FormTextInput
@@ -103,7 +121,11 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
       <Button
         onPress={handleSubmit(submitForm)}
         title="Criar minha conta"
-        disabled={!formState.isValid}
+        disabled={
+          !formState.isValid ||
+          usernameQuery.isFetching ||
+          usernameQuery.isUnavailable
+        }
         loading={isLoading}
       />
     </Screen>
