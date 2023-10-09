@@ -2,7 +2,11 @@ import {api} from '@api';
 
 import {UserAPI} from '../User';
 
-import {AuthCredentialsAPI, SignUpDataAPI} from './authTypes';
+import {
+  AuthCredentialsAPI,
+  FieldIsAvailableAPI,
+  SignUpDataAPI,
+} from './authTypes';
 
 async function signIn(
   email: string,
@@ -11,6 +15,26 @@ async function signIn(
   const response = await api.post<AuthCredentialsAPI>('login', {
     email: email,
     password: password,
+  });
+
+  return response.data;
+}
+
+async function isUserNameAvailable(params: {
+  username: string;
+}): Promise<FieldIsAvailableAPI> {
+  const response = await api.get<FieldIsAvailableAPI>('validate-username', {
+    params,
+  });
+
+  return response.data;
+}
+
+async function isEmailAvailable(params: {
+  email: string;
+}): Promise<FieldIsAvailableAPI> {
+  const response = await api.get<FieldIsAvailableAPI>('validate-email', {
+    params,
   });
 
   return response.data;
@@ -29,6 +53,8 @@ async function singUp(data: SignUpDataAPI): Promise<UserAPI> {
 
 export const authApi = {
   signIn,
+  isUserNameAvailable,
+  isEmailAvailable,
   signOut,
   singUp,
 };
