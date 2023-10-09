@@ -2,7 +2,7 @@ import {api} from '@api';
 
 import {authAdapter} from './authAdapter';
 import {authApi} from './authApi';
-import {AuthCredentials} from './authTypes';
+import {AuthCredentials, SignUpData} from './authTypes';
 
 async function signIn(
   email: string,
@@ -18,9 +18,13 @@ async function signIn(
 }
 
 async function signOut(): Promise<string> {
-  const message = await authService.signOut();
+  const message = await authApi.signOut();
 
   return message;
+}
+
+async function singUp(signUpData: SignUpData): Promise<void> {
+  await authApi.singUp(signUpData);
 }
 
 function updateToken(token: string) {
@@ -34,6 +38,7 @@ function removeToken() {
 export const authService = {
   signIn,
   signOut,
+  singUp,
   updateToken,
   removeToken,
 };
