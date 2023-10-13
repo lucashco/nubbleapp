@@ -1,15 +1,11 @@
 import React from 'react';
-import {View, ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 
-interface ContainerProps {
+interface Props {
   children: React.ReactNode;
   backgroundColor: string;
 }
-
-export function ScrollViewContainer({
-  backgroundColor,
-  children,
-}: ContainerProps) {
+export function ScrollViewContainer({children, backgroundColor}: Props) {
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -18,6 +14,7 @@ export function ScrollViewContainer({
     </ScrollView>
   );
 }
-export function ViewContainer({backgroundColor, children}: ContainerProps) {
+
+export function ViewContainer({children, backgroundColor}: Props) {
   return <View style={{backgroundColor, flex: 1}}>{children}</View>;
 }

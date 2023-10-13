@@ -3,25 +3,24 @@ import {
   Pressable,
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
-  TextStyle,
 } from 'react-native';
 
+import {$textInputStyle} from '@components';
 import {useAppTheme} from '@hooks';
 
 import {Box} from '../Box/Box';
-import {$fontFamily, $fontSizes, Text} from '../Text/Text';
+import {Text} from '../Text/Text';
 
 interface TextMessageProps extends RNTextInputProps {
   onPressSend: (message: string) => void;
 }
-
 export function TextMessage({
   onPressSend,
   value,
   ...rnTextInputProps
 }: TextMessageProps) {
-  const {colors} = useAppTheme();
   const inputRef = useRef<RNTextInput>(null);
+  const {colors} = useAppTheme();
 
   function focusInput() {
     inputRef.current?.focus();
@@ -30,7 +29,7 @@ export function TextMessage({
   const sendIsDisabled = value?.trim().length === 0;
 
   return (
-    <Pressable onPress={focusInput}>
+    <Pressable onPressIn={focusInput}>
       <Box
         paddingHorizontal="s16"
         paddingVertical="s14"
@@ -46,26 +45,14 @@ export function TextMessage({
           style={[$textInputStyle, {color: colors.gray1}]}
           {...rnTextInputProps}
         />
+        <Pressable
+          disabled={sendIsDisabled}
+          onPress={() => onPressSend(value || '')}>
+          <Text color={sendIsDisabled ? 'gray2' : 'primary'} bold>
+            Enviar
+          </Text>
+        </Pressable>
       </Box>
-
-      <Pressable
-        onPress={() => onPressSend(value || '')}
-        disabled={sendIsDisabled}>
-        <Text
-          preset="paragraphMedium"
-          color={sendIsDisabled ? 'gray2' : 'primary'}>
-          Enviar
-        </Text>
-      </Pressable>
     </Pressable>
   );
 }
-
-const $textInputStyle: TextStyle = {
-  padding: 0,
-  flexGrow: 1,
-  flexShrink: 1,
-
-  fontFamily: $fontFamily.regular,
-  ...$fontSizes.paragraphMedium,
-};
