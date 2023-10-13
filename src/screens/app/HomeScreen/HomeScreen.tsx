@@ -46,7 +46,7 @@ export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={refresh} />
         }
-        contentContainerStyle={{flex: postList.length === 0 ? 1 : undefined}}
+        contentContainerStyle={postList.length === 0 ? $listContainer : {}}
         ListHeaderComponent={<HomeHeader />}
         ListEmptyComponent={
           <HomeEmpty refetch={refresh} error={isError} loading={isLoading} />
@@ -60,5 +60,9 @@ const $screen: StyleProp<ViewStyle> = {
   paddingTop: 0,
   paddingBottom: 0,
   paddingHorizontal: 0,
+  flex: 1,
+};
+
+const $listContainer: StyleProp<ViewStyle> = {
   flex: 1,
 };
