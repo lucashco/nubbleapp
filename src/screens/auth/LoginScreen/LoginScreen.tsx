@@ -7,8 +7,8 @@ import {useForm} from 'react-hook-form';
 
 import {
   Text,
-  Button,
   Screen,
+  Button,
   FormTextInput,
   FormPasswordInput,
 } from '@components';
@@ -31,7 +31,7 @@ export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
   });
 
   function submitForm({email, password}: LoginSchema) {
-    signIn({email: email, password: password});
+    signIn({email, password});
   }
 
   function navigateToSignUpScreen() {
@@ -41,13 +41,12 @@ export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
   function navigateToForgotPasswordScreen() {
     navigation.navigate('ForgotPasswordScreen');
   }
-
   return (
     <Screen scrollable>
-      <Text preset="headingLarge" mb="s8" bold>
+      <Text marginBottom="s8" preset="headingLarge">
         Olá
       </Text>
-      <Text preset="paragraphLarge" mb="s40" bold>
+      <Text preset="paragraphLarge" mb="s40">
         Digite seu e-mail e senha para entrar
       </Text>
 
@@ -64,12 +63,12 @@ export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
         name="password"
         label="Senha"
         placeholder="Digite sua senha"
+        boxProps={{mb: 's20'}}
       />
 
       <Text
         onPress={navigateToForgotPasswordScreen}
         color="primary"
-        mt="s10"
         preset="paragraphSmall"
         bold>
         Esqueci minha senha
@@ -77,18 +76,16 @@ export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
 
       <Button
         loading={isLoading}
-        onPress={handleSubmit(submitForm)}
         disabled={!formState.isValid}
-        preset="primary"
+        onPress={handleSubmit(submitForm)}
+        marginTop="s48"
         title="Entrar"
-        mt="s48"
       />
-
       <Button
         onPress={navigateToSignUpScreen}
         preset="outline"
+        marginTop="s12"
         title="Criar uma conta"
-        mt="s12"
       />
     </Screen>
   );
