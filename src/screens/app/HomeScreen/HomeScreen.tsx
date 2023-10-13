@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
   FlatList,
   ListRenderItemInfo,
@@ -18,15 +18,16 @@ import {HomeHeader} from './components/HomeHeader';
 
 export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
   const {
-    isLoading,
+    list: postList,
     isError,
+    isLoading,
     refresh,
     fetchNextPage,
-    list: postList,
   } = usePostList();
 
-  const flatListRef = useRef<FlatList<Post>>(null);
+  console.log({isLoading, refresh});
 
+  const flatListRef = React.useRef<FlatList<Post>>(null);
   useScrollToTop(flatListRef);
 
   function renderItem({item}: ListRenderItemInfo<Post>) {
@@ -37,20 +38,20 @@ export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
     <Screen style={$screen}>
       <FlatList
         ref={flatListRef}
-        contentContainerStyle={postList.length === 0 ? $listContainer : {}}
         showsVerticalScrollIndicator={false}
         data={postList}
-        keyExtractor={post => post.id.toString()}
+        keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
         onEndReached={fetchNextPage}
         onEndReachedThreshold={0.1}
+        refreshing={isLoading}
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={refresh} />
         }
-        refreshing={isLoading}
+        contentContainerStyle={{flex: postList.length === 0 ? 1 : undefined}}
         ListHeaderComponent={<HomeHeader />}
         ListEmptyComponent={
-          <HomeEmpty loading={isLoading} error={isError} refetch={refresh} />
+          <HomeEmpty refetch={refresh} error={isError} loading={isLoading} />
         }
       />
     </Screen>
@@ -61,9 +62,5 @@ const $screen: StyleProp<ViewStyle> = {
   paddingTop: 0,
   paddingBottom: 0,
   paddingHorizontal: 0,
-  flex: 1,
-};
-
-const $listContainer: StyleProp<ViewStyle> = {
   flex: 1,
 };

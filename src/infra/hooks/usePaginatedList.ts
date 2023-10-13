@@ -1,17 +1,16 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {Page} from '@types';
 
 export interface UsePaginatedListResult<TData> {
   list: TData[];
-  isError: boolean;
+  isError: boolean | null;
   isLoading: boolean;
   refresh: () => void;
   fetchNextPage: () => void;
   hasNextPage: boolean;
 }
-
 export function usePaginatedList<Data>(
   queryKey: readonly unknown[],
   getList: (page: number) => Promise<Page<Data>>,
@@ -27,13 +26,14 @@ export function usePaginatedList<Data>(
 
   useEffect(() => {
     if (query.data) {
-      const newList = query.data.pages.reduce<Data[]>((prev, page) => {
-        return [...prev, ...page.data];
+      const newList = query.data.pages.reduce<Data[]>((prev, curr) => {
+        return [...prev, ...curr.data];
       }, []);
-
       setList(newList);
     }
   }, [query.data]);
+
+  console.log(query.isFetching);
 
   return {
     list,
