@@ -25,8 +25,6 @@ export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
     fetchNextPage,
   } = usePostList();
 
-  console.log({isLoading, refresh});
-
   const flatListRef = React.useRef<FlatList<Post>>(null);
   useScrollToTop(flatListRef);
 

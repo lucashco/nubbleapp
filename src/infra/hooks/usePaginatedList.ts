@@ -33,8 +33,6 @@ export function usePaginatedList<Data>(
     }
   }, [query.data]);
 
-  console.log(query.isFetching);
-
   return {
     list,
     isError: query.isError,
