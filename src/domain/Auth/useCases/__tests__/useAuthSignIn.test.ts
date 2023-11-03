@@ -1,5 +1,4 @@
-import {renderHook} from '@testing-library/react-native';
-import {AllTheProviders, waitFor} from 'test-utils';
+import {waitFor, renderHook} from 'test-utils';
 
 import {authService} from '../../authService';
 import {useAuthSignIn} from '../useAuthSignIn';
@@ -27,11 +26,8 @@ describe('useAuthSignIn', () => {
 
     const mockedOnSuccess = jest.fn();
 
-    const {result} = renderHook(
-      () => useAuthSignIn({onSuccess: mockedOnSuccess}),
-      {
-        wrapper: AllTheProviders,
-      },
+    const {result} = renderHook(() =>
+      useAuthSignIn({onSuccess: mockedOnSuccess}),
     );
 
     await waitFor(() =>
@@ -51,9 +47,7 @@ describe('useAuthSignIn', () => {
       .mockRejectedValue(new Error('invalid user'));
 
     const mockedOnError = jest.fn();
-    const {result} = renderHook(() => useAuthSignIn({onError: mockedOnError}), {
-      wrapper: AllTheProviders,
-    });
+    const {result} = renderHook(() => useAuthSignIn({onError: mockedOnError}));
 
     await waitFor(() =>
       result.current.signIn({email: 'test@example.com', password: '123123'}),
