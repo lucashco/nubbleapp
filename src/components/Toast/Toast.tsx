@@ -1,5 +1,6 @@
+import React from 'react';
 import {useCallback, useEffect, useRef} from 'react';
-import {Animated} from 'react-native';
+import {Animated, StyleProp, ViewStyle} from 'react-native';
 
 import {useToast, useToastService} from '@services';
 
@@ -47,9 +48,13 @@ export function Toast() {
   }
 
   return (
-    <Animated.View
-      style={{position: 'absolute', alignSelf: 'center', opacity: fadeAnim}}>
+    <Animated.View style={[$viewStyle, {opacity: fadeAnim}]}>
       <ToasContent toast={toast} />
     </Animated.View>
   );
 }
+
+const $viewStyle: StyleProp<ViewStyle> = {
+  position: 'absolute',
+  alignSelf: 'center',
+};
