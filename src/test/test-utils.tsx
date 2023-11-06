@@ -16,7 +16,7 @@ import {
 
 import {theme} from '@theme';
 
-const queryObjectCreator: QueryClientConfig = {
+const queryClientConfig: QueryClientConfig = {
   logger: {
     log: console.log,
     warn: console.warn,
@@ -34,8 +34,8 @@ const queryObjectCreator: QueryClientConfig = {
   },
 };
 
-export const wrapperAllProviders = () => {
-  const queryClient = new QueryClient(queryObjectCreator);
+export const wrapAllProviders = () => {
+  const queryClient = new QueryClient(queryClientConfig);
 
   return ({children}: PropsWithChildren) => (
     <QueryClientProvider client={queryClient}>
@@ -49,14 +49,33 @@ export const wrapperAllProviders = () => {
 const customRender = <T extends unknown>(
   component: ReactElement<T>,
   options?: Omit<RenderOptions, 'wrapper'>,
-) => render(component, {wrapper: wrapperAllProviders(), ...options});
+) => render(component, {wrapper: wrapAllProviders(), ...options});
+
+export const wrapScreenProviders = () => {
+  const queryClient = new QueryClient(queryClientConfig);
+
+  return ({children}: PropsWithChildren) => (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>{children}</NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+};
+
+function customRenderScreen<T extends unknown>(
+  component: ReactElement<T>,
+  options?: Omit<RenderOptions, 'wrapper'>,
+) {
+  return render(component, {wrapper: wrapScreenProviders(), ...options});
+}
 
 function customRenderHook<Result, Props>(
   renderCallback: (props: Props) => Result,
   options?: Omit<RenderHookOptions<Props>, 'wrapper'>,
 ) {
   return renderHook(renderCallback, {
-    wrapper: wrapperAllProviders(),
+    wrapper: wrapAllProviders(),
     ...options,
   });
 }
@@ -65,4 +84,8 @@ function customRenderHook<Result, Props>(
 export * from '@testing-library/react-native';
 
 // override render method
-export {customRender as render, customRenderHook as renderHook};
+export {
+  customRender as render,
+  customRenderHook as renderHook,
+  customRenderScreen as renderScreen,
+};
