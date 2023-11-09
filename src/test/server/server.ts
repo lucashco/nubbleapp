@@ -1,5 +1,5 @@
 import {setupServer} from 'msw/node';
 
-const server = setupServer();
+import {postCommentHandlers} from './postComment/postCommentHandlers';
 
-server.listen();
+export const server = setupServer(...postCommentHandlers);
