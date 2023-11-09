@@ -33,6 +33,7 @@ export const useAuthCredentialsZustand = create<AuthCredentialsService>()(
     set => ({
       authCredentials: null,
       isLoading: false,
+      userId: null,
       saveCredentials: async ac => set({authCredentials: ac}),
       removeCredentials: async () => set({authCredentials: null}),
     }),
