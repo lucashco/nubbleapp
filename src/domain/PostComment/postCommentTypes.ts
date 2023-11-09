@@ -11,7 +11,7 @@ export interface PostComment {
   };
 }
 
-export interface PostCommentApi {
+export interface PostCommentAPI {
   id: number;
   message: string;
   user_id: number;

@@ -1,14 +1,14 @@
 import {PageAPI, PageParams, api} from '@api';
 
-import {PostCommentApi} from './postCommentTypes';
+import {PostCommentAPI} from './postCommentTypes';
 
-const POST_COMMENT_BASE_URL = 'user/post_comment';
+export const POST_COMMENT_BASE_URL = 'user/post_comment';
 
 async function getList(
   post_id: number,
   pageParams?: PageParams,
-): Promise<PageAPI<PostCommentApi>> {
-  const response = await api.get<PageAPI<PostCommentApi>>(
+): Promise<PageAPI<PostCommentAPI>> {
+  const response = await api.get<PageAPI<PostCommentAPI>>(
     POST_COMMENT_BASE_URL,
     {
       params: {
@@ -24,8 +24,8 @@ async function getList(
 async function create(
   post_id: number,
   message: string,
-): Promise<PostCommentApi> {
-  const response = await api.post<PostCommentApi>(POST_COMMENT_BASE_URL, {
+): Promise<PostCommentAPI> {
+  const response = await api.post<PostCommentAPI>(POST_COMMENT_BASE_URL, {
     post_id,
     message,
   });
