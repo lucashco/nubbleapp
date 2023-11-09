@@ -1,7 +1,6 @@
 import {BASE_URL, PageAPI} from '@api';
-import {PostCommentAPI} from '@domain';
+import {PostCommentAPI, POST_COMMENT_BASE_URL} from '@domain';
 import {http, HttpResponse} from 'msw';
-import {POST_COMMENT_BASE_URL} from 'src/domain/PostComment/postCommentApi';
 
 import {mockedData} from './mocks';
 
