@@ -27,7 +27,7 @@ import {HeartIcon} from '../../assets/icons/HeartIcon';
 import {HomeFillIcon} from '../../assets/icons/HomeFillIcon';
 import {HomeIcon} from '../../assets/icons/HomeIcon';
 import {MessageIcon} from '../../assets/icons/MessageIcon';
-import {MessageRoundIcon} from '../../assets/icons/MessageRoundLight';
+import {MessageRoundIcon} from '../../assets/icons/MessageRoundIcon';
 import {NewPostIcon} from '../../assets/icons/NewPostIcon';
 import {ProfileFillIcon} from '../../assets/icons/ProfileFillIcon';
 import {ProfileIcon} from '../../assets/icons/ProfileIcon';
@@ -57,7 +57,7 @@ export function Icon({
 
   if (onPress) {
     return (
-      <Pressable testID={name} onPress={onPress} hitSlop={12}>
+      <Pressable testID={name} hitSlop={10} onPress={onPress}>
         <SVGIcon color={colors[color]} size={size} />
       </Pressable>
     );
