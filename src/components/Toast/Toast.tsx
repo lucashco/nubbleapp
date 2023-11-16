@@ -48,7 +48,9 @@ export function Toast() {
   }
 
   return (
-    <Animated.View style={[$viewStyle, {opacity: fadeAnim}]}>
+    <Animated.View
+      testID="toast-message"
+      style={[$viewStyle, {opacity: fadeAnim}]}>
       <ToasContent toast={toast} />
     </Animated.View>
   );
