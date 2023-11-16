@@ -9,7 +9,7 @@ const url = `${BASE_URL}${POST_COMMENT_BASE_URL}`;
 
 let inMemoryReponse = cloneDeep(mockedData.mockedPostCommentResponse);
 
-export function resetInMemoryReponse() {
+export function resetInMemoryResponse() {
   inMemoryReponse = cloneDeep(mockedData.mockedPostCommentResponse);
 }
 

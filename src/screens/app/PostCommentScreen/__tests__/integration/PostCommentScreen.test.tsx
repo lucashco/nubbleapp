@@ -2,7 +2,7 @@ import React from 'react';
 import {Alert, AlertButton} from 'react-native';
 
 import {authCredentialsStorage} from '@services';
-import {mockedPostComment, server, resetInMemoryReponse} from '@test';
+import {mockedPostComment, server, resetInMemoryResponse} from '@test';
 import {
   act,
   fireEvent,
@@ -21,7 +21,7 @@ beforeAll(() => {
 
 afterEach(() => {
   server.resetHandlers();
-  resetInMemoryReponse();
+  resetInMemoryResponse();
 });
 
 afterAll(() => {
