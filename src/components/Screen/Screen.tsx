@@ -1,5 +1,10 @@
 import React from 'react';
-import {KeyboardAvoidingView, Platform} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
 import {Box, BoxProps} from '@components';
 import {useAppSafeArea, useAppTheme} from '@hooks';
@@ -27,7 +32,7 @@ export function Screen({
   const Container = scrollable ? ScrollViewContainer : ViewContainer;
   return (
     <KeyboardAvoidingView
-      style={{flex: 1}}
+      style={$keyboardAvoidingViewContainer}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <Container backgroundColor={colors.background}>
         <Box
@@ -41,3 +46,7 @@ export function Screen({
     </KeyboardAvoidingView>
   );
 }
+
+const $keyboardAvoidingViewContainer: StyleProp<ViewStyle> = {
+  flex: 1,
+};
