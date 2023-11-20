@@ -5,17 +5,17 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useToastService} from '@services';
 import {useForm} from 'react-hook-form';
 
-import {Screen, Text, Button, FormTextInput} from '@components';
+import {Button, FormTextInput, Screen, Text} from '@components';
 import {useResetNavigationSuccess} from '@hooks';
 import {AuthScreenProps, AuthStackParamList} from '@routes';
 
 import {
   ForgotPasswordSchema,
   forgotPasswordSchema,
-} from './ForgotPasswordSchema';
+} from './forgotPasswordSchema';
 
-const resetParams: AuthStackParamList['SuccessScreen'] = {
-  title: `Enviamos as instruções para seu  ${'\n'}e-mail`,
+const resetParam: AuthStackParamList['SuccessScreen'] = {
+  title: `Enviamos as instruções ${'\n'}para seu e-mail`,
   description: 'Clique no link enviado no seu e-mail para recuperar sua senha',
   icon: {
     name: 'messageRound',
@@ -26,11 +26,8 @@ const resetParams: AuthStackParamList['SuccessScreen'] = {
 export function ForgotPasswordScreen({}: AuthScreenProps<'ForgotPasswordScreen'>) {
   const {reset} = useResetNavigationSuccess();
   const {showToast} = useToastService();
-
-  const {isLoading, requestNewPassword} = useAuthRequestNewPassword({
-    onSuccess: () => {
-      reset(resetParams);
-    },
+  const {requestNewPassword, isLoading} = useAuthRequestNewPassword({
+    onSuccess: () => reset(resetParam),
     onError: message => showToast({message, type: 'error'}),
   });
 
@@ -42,16 +39,16 @@ export function ForgotPasswordScreen({}: AuthScreenProps<'ForgotPasswordScreen'>
     mode: 'onChange',
   });
 
-  function submitForm({email}: ForgotPasswordSchema) {
-    requestNewPassword(email);
+  function submitForm(values: ForgotPasswordSchema) {
+    requestNewPassword(values.email);
   }
 
   return (
     <Screen canGoBack>
-      <Text preset="headingLarge" bold mb="s16">
+      <Text preset="headingLarge" mb="s16">
         Esqueci minha senha
       </Text>
-      <Text preset="paragraphMedium" mb="s32">
+      <Text preset="paragraphLarge" mb="s32">
         Digite seu e-mail e enviaremos as instruções para redefinição de senha
       </Text>
 
@@ -59,16 +56,15 @@ export function ForgotPasswordScreen({}: AuthScreenProps<'ForgotPasswordScreen'>
         control={control}
         name="email"
         label="E-mail"
-        keyboardType="email-address"
         placeholder="Digite seu e-mail"
+        boxProps={{mb: 's40'}}
       />
 
       <Button
+        loading={isLoading}
+        disabled={!formState.isValid}
         onPress={handleSubmit(submitForm)}
         title="Recuperar senha"
-        mt="s48"
-        disabled={!formState.isValid}
-        loading={isLoading}
       />
     </Screen>
   );
