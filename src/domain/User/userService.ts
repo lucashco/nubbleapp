@@ -1,3 +1,6 @@
+import {apiAdapter} from '@api';
+import {Page} from '@types';
+
 import {userAdapter} from './userAdapter';
 import {userApi} from './userApi';
 import {User} from './userTypes';
@@ -8,6 +11,13 @@ async function getById(id: number): Promise<User> {
   return userAdapter.toUser(response);
 }
 
+async function searchUser(search: string): Promise<Page<User>> {
+  const getListAPI = await userApi.getList(search);
+
+  return apiAdapter.toPageModel(getListAPI, userAdapter.toUser);
+}
+
 export const userService = {
   getById,
+  searchUser,
 };
