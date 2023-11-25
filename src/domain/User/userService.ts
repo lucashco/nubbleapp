@@ -12,9 +12,9 @@ async function getById(id: number): Promise<User> {
 }
 
 async function searchUser(search: string): Promise<Page<User>> {
-  const getListAPI = await userApi.getList(search);
+  const userPageAPI = await userApi.getList(search);
 
-  return apiAdapter.toPageModel(getListAPI, userAdapter.toUser);
+  return apiAdapter.toPageModel(userPageAPI, userAdapter.toUser);
 }
 
 export const userService = {
