@@ -4,7 +4,7 @@ import {StorageService} from '../storage';
 
 const mmkvInstance = new MMKV();
 
-export const mmkvStorage: StorageService = {
+export const MMKVStorage: StorageService = {
   getItem: async key => {
     const item = mmkvInstance.getString(key);
 
