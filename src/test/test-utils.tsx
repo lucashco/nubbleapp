@@ -56,7 +56,7 @@ const customRender = <T extends unknown>(
 export const wrapScreenProviders = () => {
   const queryClient = new QueryClient(queryClientConfig);
 
-  return ({children}: PropsWithChildren) => (
+  return ({children}: {children: React.ReactNode}) => (
     <AuthCredentialsProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
