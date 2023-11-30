@@ -15,7 +15,9 @@ export const AuthCredentialsContext = createContext<AuthCredentialsService>({
   removeCredentials: async () => {},
 });
 
-export function AuthCredentialsProvider({children}: React.PropsWithChildren) {
+export function AuthCredentialsProvider({
+  children,
+}: React.PropsWithChildren<{}>) {
   const [authCredentials, setAuthCredentials] =
     useState<AuthCredentials | null>(null);
   const [isLoading, setIsLoading] = useState(true);
