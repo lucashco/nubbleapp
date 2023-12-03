@@ -1,10 +1,5 @@
 import {useContext} from 'react';
 
-import {create} from 'zustand';
-import {persist} from 'zustand/middleware';
-
-import {storage} from '../storage';
-
 import {AuthCredentialsService} from './authCredentialsType';
 import {AuthCredentialsContext} from './Providers/AuthCredentialsProvider';
 
@@ -28,18 +23,18 @@ const useAuthCredentialsContext = () => {
  * @deprecated this hook is deprecated and will be removed in a future release
  */
 
-export const useAuthCredentialsZustand = create<AuthCredentialsService>()(
-  persist(
-    set => ({
-      authCredentials: null,
-      isLoading: false,
-      userId: null,
-      saveCredentials: async ac => set({authCredentials: ac}),
-      removeCredentials: async () => set({authCredentials: null}),
-    }),
-    {
-      name: '@Auth',
-      storage: storage,
-    },
-  ),
-);
+// export const useAuthCredentialsZustand = create<AuthCredentialsService>()(
+//   persist(
+//     set => ({
+//       authCredentials: null,
+//       isLoading: false,
+//       userId: null,
+//       saveCredentials: async ac => set({authCredentials: ac}),
+//       removeCredentials: async () => set({authCredentials: null}),
+//     }),
+//     {
+//       name: '@Auth',
+//       storage: storage,
+//     },
+//   ),
+// );

@@ -32,10 +32,6 @@ afterAll(() => {
 
 describe('integration: PostCommentScreen', () => {
   it('should update the list of comments when the user add a comment', async () => {
-    jest
-      .spyOn(authCredentialsStorage, 'get')
-      .mockResolvedValue(mockedPostComment.mateusAuthCredentials);
-
     renderScreen(
       <PostCommentScreen
         navigation={{} as any}
