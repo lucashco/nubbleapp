@@ -2,13 +2,16 @@ import React from 'react';
 
 import {authCredentialsStorage} from '@services';
 import {mockUtils, server, userMocked} from '@test';
-import {fireEvent, renderScreen, screen} from 'test-utils';
+import {act, fireEvent, renderScreen, screen} from 'test-utils';
 
 import {AppStack} from '@routes';
+
+jest.unmock('@react-navigation/native');
 
 beforeAll(() => {
   server.listen();
 
+  jest.useFakeTimers();
   jest
     .spyOn(authCredentialsStorage, 'get')
     .mockResolvedValue(mockUtils.mateusAuthCredentials);
@@ -20,8 +23,8 @@ afterEach(() => {
 
 afterAll(() => {
   server.close();
-  jest.resetAllMocks();
   jest.useRealTimers();
+  jest.resetAllMocks();
 });
 
 describe('integration: SearchScreen', () => {
@@ -32,6 +35,9 @@ describe('integration: SearchScreen', () => {
 
     fireEvent.changeText(inputText, 'mar');
 
+    // skip debounce
+    act(() => jest.runAllTimers());
+
     const user1 = await screen.findByText(userMocked.user1.username);
     expect(user1).toBeTruthy();
 
@@ -39,5 +45,9 @@ describe('integration: SearchScreen', () => {
     expect(user2).toBeTruthy();
 
     fireEvent.press(user1);
+
+    const fullNameUser = await screen.findByText(userMocked.user1.full_name);
+
+    expect(fullNameUser).toBeTruthy();
   });
 });
