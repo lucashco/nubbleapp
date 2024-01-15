@@ -41,10 +41,13 @@ export function Button({
         <ActivityIndicator
           testID="activity-indicator"
           size="large"
-          color={buttonPreset.content}
+          color={buttonPreset.content.color}
         />
       ) : (
-        <Text bold color={buttonPreset.content}>
+        <Text
+          bold
+          color={buttonPreset.content.color}
+          {...buttonPreset.content.textProps}>
           {title}
         </Text>
       )}
