@@ -5,7 +5,12 @@ import {useInfiniteQuery} from '@tanstack/react-query';
 
 import {cameraRollService} from './cameraRollService';
 
-export function useCameraRoll(hasPermission: boolean = false) {
+type Props = {
+  hasPermission?: boolean;
+  onFirstLoad?: (imageUri: string) => void;
+};
+
+export function useCameraRoll({hasPermission = false, onFirstLoad}: Props) {
   const [photoList, setPhotoList] = useState<string[]>([]);
 
   const query = useInfiniteQuery({
@@ -21,8 +26,12 @@ export function useCameraRoll(hasPermission: boolean = false) {
         return [...prev, ...curr.photoList];
       }, []);
       setPhotoList(newList);
+
+      if (query.data.pages.length === 1 && onFirstLoad) {
+        onFirstLoad(newList[0]);
+      }
     }
-  }, [query.data]);
+  }, [query.data, onFirstLoad]);
 
   return {
     photoList,
