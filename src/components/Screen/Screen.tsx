@@ -1,5 +1,10 @@
 import React from 'react';
-import {KeyboardAvoidingView, Platform} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
 import {Box, BoxProps} from '@components';
 import {useAppSafeArea, useAppTheme} from '@hooks';
@@ -12,6 +17,7 @@ export interface ScreenProps extends BoxProps {
   canGoBack?: boolean;
   scrollable?: boolean;
   title?: string;
+  noHorizontalPadding?: boolean;
 }
 
 export function Screen({
@@ -21,6 +27,7 @@ export function Screen({
   HeaderComponent,
   title,
   style,
+  noHorizontalPadding = false,
   ...boxProps
 }: ScreenProps) {
   const {bottom, top} = useAppSafeArea();
@@ -29,11 +36,11 @@ export function Screen({
   const Container = scrollable ? ScrollViewContainer : ViewContainer;
   return (
     <KeyboardAvoidingView
-      style={{flex: 1}}
+      style={$keyboardAvoidingViewStyle}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <Container backgroundColor={colors.background}>
         <Box
-          paddingHorizontal="s24"
+          paddingHorizontal={noHorizontalPadding ? undefined : 's24'}
           style={[{paddingTop: top, paddingBottom: bottom}, style]}
           {...boxProps}>
           <ScreenHeader
@@ -47,3 +54,7 @@ export function Screen({
     </KeyboardAvoidingView>
   );
 }
+
+const $keyboardAvoidingViewStyle: StyleProp<ViewStyle> = {
+  flex: 1,
+};
