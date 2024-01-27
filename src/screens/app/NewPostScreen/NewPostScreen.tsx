@@ -17,6 +17,7 @@ import {Header} from './components/Header';
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const NUM_COLS = 4;
 const ITEM_WIDTH = SCREEN_WIDTH / NUM_COLS;
+const ITEM_HEIGHT = 200;
 
 export function NewPostScreen({}: AppTabScreenProps<'NewPostScreen'>) {
   const [selectedImage, setSelectedImage] = useState('');
@@ -38,7 +39,7 @@ export function NewPostScreen({}: AppTabScreenProps<'NewPostScreen'>) {
         <Image
           key={item}
           source={{uri: item}}
-          style={{width: ITEM_WIDTH, height: 200}}
+          style={{width: ITEM_WIDTH, height: ITEM_HEIGHT}}
         />
       </Pressable>
     );
