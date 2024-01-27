@@ -15,6 +15,7 @@ import {AppBottomTabParamList, AppTabNavigator} from './AppTabNavigator';
 export type AppStackParamList = {
   AppTabNavigator: NavigatorScreenParams<AppBottomTabParamList>;
   SettingsScreen: undefined;
+  SearchScreen: undefined;
   PostCommentScreen: {
     postId: number;
     postAuthorId: number;
@@ -22,7 +23,9 @@ export type AppStackParamList = {
   ProfileScreen: {
     userId: number;
   };
-  SearchScreen: undefined;
+  PublishPostScreen: {
+    imageUri: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
