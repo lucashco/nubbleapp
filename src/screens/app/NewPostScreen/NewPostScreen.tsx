@@ -7,7 +7,7 @@ import {
   Pressable,
 } from 'react-native';
 
-import {useCameraRoll} from '@services';
+import {useCameraRoll, usePermission} from '@services';
 
 import {Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
@@ -21,8 +21,11 @@ const ITEM_HEIGHT = 200;
 
 export function NewPostScreen({}: AppTabScreenProps<'NewPostScreen'>) {
   const [selectedImage, setSelectedImage] = useState('');
+
+  const permission = usePermission('photoLibrary');
+
   const {photoList, fetchNextPage} = useCameraRoll({
-    hasPermission: true,
+    hasPermission: permission.status === 'granted',
     onFirstLoad: onSelectImage,
   });
 
