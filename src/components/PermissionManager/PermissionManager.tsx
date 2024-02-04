@@ -7,7 +7,7 @@ import {ActivityIndicator} from '../ActivityIndicator/ActivityIndicator';
 import {Box} from '../Box/Box';
 import {Button} from '../Button/Button';
 import {Screen} from '../Screen/Screen';
-import {Text} from '../Text/Text';
+import {Text, TextProps} from '../Text/Text';
 
 interface PermissionManagerProps {
   permissionName: PermissionName;
@@ -27,29 +27,41 @@ export function PermissionManager({
   }
 
   return (
-    <Screen flex={1} justifyContent="center" alignItems="center">
-      <Text preset="headingSmall" textAlign="center">
-        {description}
-      </Text>
-      {isLoading && <ActivityIndicator color="primary" />}
-      {status === 'never_ask_again' && (
-        <Box>
-          {Platform.OS === 'android' && (
-            <Text
-              preset="paragraphMedium"
-              marginVertical="s16"
-              textAlign="center">
-              É necessário fechar e abrir o app novamente após alterar as
-              configurações.
-            </Text>
-          )}
-          <Button
-            title="Abrir configurações"
-            onPress={Linking.openSettings}
-            mt="s24"
-          />
-        </Box>
-      )}
+    <Screen canGoBack flex={1}>
+      <Box flex={1} justifyContent="center" alignItems="center">
+        <Text preset="headingSmall" textAlign="center">
+          {description}
+        </Text>
+        {isLoading && <ActivityIndicator color="primary" />}
+        {status === 'unavailable' && (
+          <Text {...$messageStyle}>
+            Esse recurso não está disponível para esse dispositivo
+          </Text>
+        )}
+        {status === 'never_ask_again' && (
+          <Box>
+            {Platform.OS === 'android' && (
+              <Text {...$messageStyle}>
+                É necessário fechar e abrir o app novamente após alterar as
+                configurações.
+              </Text>
+            )}
+            <Button
+              title="Abrir configurações"
+              onPress={Linking.openSettings}
+              mt="s24"
+            />
+          </Box>
+        )}
+      </Box>
     </Screen>
   );
 }
+
+const $messageStyle: TextProps = {
+  preset: 'paragraphMedium',
+  marginVertical: 's16',
+  textAlign: 'center',
+  bold: true,
+  color: 'gray2',
+};
