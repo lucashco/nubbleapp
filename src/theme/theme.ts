@@ -12,6 +12,7 @@ export const palette = {
   redError: '#EA3838',
   redErrorLight: '#FBECEC',
 
+  black60: 'rgba(0,0,0, 0.6)',
   grayBlack: '#000000',
   gray1: '#636363',
   gray2: '#8E8E8E',
