@@ -20,6 +20,12 @@ export function useCameraRoll({hasPermission = false, onFirstLoad}: Props) {
     enabled: hasPermission,
   });
 
+  function fetchNextPage() {
+    if (hasPermission) {
+      query.fetchNextPage();
+    }
+  }
+
   useEffect(() => {
     if (query.data) {
       const newList = query.data.pages.reduce<string[]>((prev, curr) => {
@@ -36,6 +42,6 @@ export function useCameraRoll({hasPermission = false, onFirstLoad}: Props) {
   return {
     photoList,
     hasNextPage: query.hasNextPage,
-    fetchNextPage: () => query.fetchNextPage(),
+    fetchNextPage: fetchNextPage,
   };
 }

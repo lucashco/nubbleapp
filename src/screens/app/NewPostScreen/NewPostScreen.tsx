@@ -9,7 +9,7 @@ import {
 
 import {useCameraRoll, usePermission} from '@services';
 
-import {Screen} from '@components';
+import {PermissionManager, Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
 
 import {Header} from './components/Header';
@@ -49,18 +49,22 @@ export function NewPostScreen({}: AppTabScreenProps<'NewPostScreen'>) {
   }
 
   return (
-    <Screen canGoBack title="Novo post" noHorizontalPadding>
-      <FlatList
-        numColumns={4}
-        data={photoList}
-        keyExtractor={item => item}
-        renderItem={renderItem}
-        onEndReached={fetchNextPage}
-        onEndReachedThreshold={0.1}
-        ListHeaderComponent={
-          <Header imageUri={selectedImage} imageWidth={SCREEN_WIDTH} />
-        }
-      />
-    </Screen>
+    <PermissionManager
+      permissionName="photoLibrary"
+      description="Permita o nubble acessar as images da sua galeria">
+      <Screen canGoBack title="Novo post" noHorizontalPadding>
+        <FlatList
+          numColumns={4}
+          data={photoList}
+          keyExtractor={item => item}
+          renderItem={renderItem}
+          onEndReached={fetchNextPage}
+          onEndReachedThreshold={0.1}
+          ListHeaderComponent={
+            <Header imageUri={selectedImage} imageWidth={SCREEN_WIDTH} />
+          }
+        />
+      </Screen>
+    </PermissionManager>
   );
 }
