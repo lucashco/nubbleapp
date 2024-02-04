@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 
-import {Box, Icon} from '@components';
+import {Box, Icon, PermissionManager} from '@components';
 import {useAppSafeArea} from '@hooks';
 import {AppScreenProps} from '@routes';
 
@@ -18,37 +18,41 @@ export function CameraScreen({navigation}: AppScreenProps<'CameraScreen'>) {
   }
 
   return (
-    <Box flex={1}>
-      <Box backgroundColor="grayWhite" style={StyleSheet.absoluteFill} />
-      <Box flex={1} justifyContent="space-between" style={{paddingTop: top}}>
-        <Box
-          backgroundColor="black60"
-          height={CONTROL_HEIGHT - CONTROL_DIFF}
-          paddingHorizontal="s24"
-          flexDirection="row"
-          justifyContent="space-between">
-          <Icon
-            size={20}
-            color="grayWhite"
-            name="arrowLeft"
-            onPress={navigation.goBack}
-          />
-          <Icon
-            size={20}
-            color="grayWhite"
-            name={flash ? 'flashOn' : 'flashOff'}
-            onPress={toggleFlash}
-          />
-          <Box width={20} />
-        </Box>
-        <Box
-          backgroundColor="black60"
-          height={CONTROL_HEIGHT + CONTROL_DIFF}
-          justifyContent="center"
-          alignItems="center">
-          <Icon name="cameraClick" color="grayWhite" />
+    <PermissionManager
+      permissionName="camera"
+      description="Permita o Nublle acessar a camera">
+      <Box flex={1}>
+        <Box backgroundColor="grayWhite" style={StyleSheet.absoluteFill} />
+        <Box flex={1} justifyContent="space-between" style={{paddingTop: top}}>
+          <Box
+            backgroundColor="black60"
+            height={CONTROL_HEIGHT - CONTROL_DIFF}
+            paddingHorizontal="s24"
+            flexDirection="row"
+            justifyContent="space-between">
+            <Icon
+              size={20}
+              color="grayWhite"
+              name="arrowLeft"
+              onPress={navigation.goBack}
+            />
+            <Icon
+              size={20}
+              color="grayWhite"
+              name={flash ? 'flashOn' : 'flashOff'}
+              onPress={toggleFlash}
+            />
+            <Box width={20} />
+          </Box>
+          <Box
+            backgroundColor="black60"
+            height={CONTROL_HEIGHT + CONTROL_DIFF}
+            justifyContent="center"
+            alignItems="center">
+            <Icon name="cameraClick" color="grayWhite" />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </PermissionManager>
   );
 }
