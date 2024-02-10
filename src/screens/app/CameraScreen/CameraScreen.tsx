@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
 
+import {useIsFocused} from '@react-navigation/native';
+import {Camera, useCameraDevice} from 'react-native-vision-camera';
+
 import {Box, Icon, PermissionManager} from '@components';
-import {useAppSafeArea} from '@hooks';
+import {useAppSafeArea, useAppState} from '@hooks';
 import {AppScreenProps} from '@routes';
 
 const CAMERA_VIEW = Dimensions.get('screen').width;
@@ -13,6 +16,12 @@ export function CameraScreen({navigation}: AppScreenProps<'CameraScreen'>) {
   const [flash, setFlash] = useState(false);
   const {top} = useAppSafeArea();
 
+  const device = useCameraDevice('back');
+
+  const isFocused = useIsFocused();
+  const {appState} = useAppState();
+  const isActive = isFocused && appState === 'active';
+
   function toggleFlash() {
     setFlash(state => !state);
   }
@@ -22,14 +31,22 @@ export function CameraScreen({navigation}: AppScreenProps<'CameraScreen'>) {
       permissionName="camera"
       description="Permita o Nublle acessar a camera">
       <Box flex={1}>
-        <Box backgroundColor="grayWhite" style={StyleSheet.absoluteFill} />
-        <Box flex={1} justifyContent="space-between" style={{paddingTop: top}}>
+        {device !== undefined && (
+          <Camera
+            style={StyleSheet.absoluteFill}
+            device={device}
+            isActive={isActive}
+          />
+        )}
+
+        <Box flex={1} justifyContent="space-between">
           <Box
             backgroundColor="black60"
             height={CONTROL_HEIGHT - CONTROL_DIFF}
             paddingHorizontal="s24"
             flexDirection="row"
-            justifyContent="space-between">
+            justifyContent="space-between"
+            style={{paddingTop: top}}>
             <Icon
               size={20}
               color="grayWhite"
