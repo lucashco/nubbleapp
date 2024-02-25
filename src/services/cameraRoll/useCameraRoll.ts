@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import {QueryKeys} from '@infra';
 import {useInfiniteQuery} from '@tanstack/react-query';
@@ -26,6 +26,15 @@ export function useCameraRoll({hasPermission = false, onFirstLoad}: Props) {
     }
   }
 
+  const onInitialLoading = useCallback(
+    (imageUri: string) => {
+      if (typeof onFirstLoad === 'function') {
+        onFirstLoad(imageUri);
+      }
+    },
+    [onFirstLoad],
+  );
+
   useEffect(() => {
     if (query.data) {
       const newList = query.data.pages.reduce<string[]>((prev, curr) => {
@@ -33,11 +42,11 @@ export function useCameraRoll({hasPermission = false, onFirstLoad}: Props) {
       }, []);
       setPhotoList(newList);
 
-      if (query.data.pages.length === 1 && onFirstLoad) {
-        onFirstLoad(newList[0]);
+      if (query.data.pages.length === 1) {
+        onInitialLoading(newList[0]);
       }
     }
-  }, [query.data, onFirstLoad]);
+  }, [onInitialLoading, query.data]);
 
   return {
     photoList,
