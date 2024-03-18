@@ -4,4 +4,6 @@ export interface ImageForUpload {
   type: 'image/jpeg' | 'image/png';
 }
 
-export interface MediaService {}
+export interface MediaService {
+  prepareImageForUpload: (imageUri: string) => ImageForUpload;
+}
