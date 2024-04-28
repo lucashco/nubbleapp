@@ -3,19 +3,22 @@ import {useCallback, useEffect, useState} from 'react';
 import {QueryKeys} from '@infra';
 import {useInfiniteQuery} from '@tanstack/react-query';
 
-import {cameraRollService} from './cameraRollService';
+import {multimediaService} from './multimediaService';
 
 type Props = {
   hasPermission?: boolean;
   onFirstLoad?: (imageUri: string) => void;
 };
 
-export function useCameraRoll({hasPermission = false, onFirstLoad}: Props) {
+export function useMultimediaGetPhotos({
+  hasPermission = false,
+  onFirstLoad,
+}: Props) {
   const [photoList, setPhotoList] = useState<string[]>([]);
 
   const query = useInfiniteQuery({
     queryKey: [QueryKeys.CameraRollPhotos],
-    queryFn: ({pageParam}) => cameraRollService.getPhotos(pageParam),
+    queryFn: ({pageParam}) => multimediaService.getPhotos(pageParam),
     getNextPageParam: ({cursor}) => cursor,
     enabled: hasPermission,
   });
