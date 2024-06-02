@@ -24,10 +24,10 @@ export function NewPostScreen({}: AppTabScreenProps<'NewPostScreen'>) {
 
   const permission = usePermission('photoLibrary');
 
-  const {photoList, fetchNextPage} = useMultimediaGetPhotos({
-    hasPermission: permission.status === 'granted',
-    onFirstLoad: onSelectImage,
-  });
+  const {photoList, fetchNextPage} = useMultimediaGetPhotos(
+    permission.status === 'granted',
+    setSelectedImage,
+  );
 
   const flatListRef = useRef<FlatList>(null);
 
