@@ -19,7 +19,7 @@ export const palette = {
   white70: 'rgba(255,255,255, 0.7)',
 };
 
-export const lightTheme = {
+const lightTheme = {
   ...palette,
   primary: palette.greenPrimary,
   primaryContrast: palette.grayWhite,
@@ -46,7 +46,7 @@ export const lightTheme = {
   onBackgroundGray2: palette.gray4,
 };
 
-export const darkTheme: typeof lightTheme = {
+const darkTheme: typeof lightTheme = {
   ...palette,
   primary: palette.carrotSecondary,
   primaryContrast: palette.grayWhite,

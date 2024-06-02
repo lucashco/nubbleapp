@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
+
+import {
+  ThemePreference,
+  useAppThemePreference,
+  useSettingsService,
+} from '@services';
 
 import {RadioButtonSelector, Screen} from '@components';
-
-type ThemePreference = 'light' | 'dark' | 'system';
 
 type Option = {
   label: string;
@@ -29,14 +33,23 @@ const items: Option[] = [
 ];
 
 export function DarkModeScreen() {
-  const [selectedItem, setSelectedItem] = useState<Option>();
+  const themePreference = useAppThemePreference();
+  const {setThemePreference} = useSettingsService();
+
+  const selectedItem = items.find(
+    item => item.themePreference === themePreference,
+  );
+
+  function setSelectedItem(item: Option) {
+    setThemePreference(item.themePreference);
+  }
 
   return (
     <Screen canGoBack title="Modo escuro">
       <RadioButtonSelector
         items={items}
         selectedItem={selectedItem}
-        onSelect={item => setSelectedItem(item)}
+        onSelect={setSelectedItem}
         labelKey="label"
         valueKey="themePreference"
         descriptionKey="description"
