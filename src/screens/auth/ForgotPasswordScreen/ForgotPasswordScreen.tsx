@@ -12,7 +12,7 @@ import {AuthScreenProps, AuthStackParamList} from '@routes';
 import {
   ForgotPasswordSchema,
   forgotPasswordSchema,
-} from './forgotPasswordSchema';
+} from './ForgotPasswordSchema';
 
 const resetParam: AuthStackParamList['SuccessScreen'] = {
   title: `Enviamos as instruções ${'\n'}para seu e-mail`,

@@ -1,14 +1,15 @@
 import React from 'react';
 
-import {Box, Text} from '@components';
+import {Box, ProgressIndicator, Text} from '@components';
 
 import {OnboardingPageItem} from '../onboardingData';
 
 type ContentProps = Omit<OnboardingPageItem, 'image'>;
 
-export function Content({title, subtitle}: ContentProps) {
+export function Content({title, subtitle, index, total}: ContentProps) {
   return (
     <Box>
+      <ProgressIndicator total={total} currentIndex={index} mb="s24" />
       <Text preset="headingLarge">
         {title.map(({text, hightlight}) => (
           <Text
@@ -20,7 +21,9 @@ export function Content({title, subtitle}: ContentProps) {
           </Text>
         ))}
       </Text>
-      <Text preset="paragraphLarge">{subtitle}</Text>
+      <Text mt="s16" preset="paragraphLarge">
+        {subtitle}
+      </Text>
     </Box>
   );
 }
